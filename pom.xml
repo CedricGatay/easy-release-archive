@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+        <!-- 
+        Parent POM including dependencies' versions
+        that's a maven good practice !
+        In this example, fr.gatay.cedric.release:* are in 1.0-SNAPSHOT
+        and mysql:mysql-connector-java is 5.1.15
+        -->
+    <parent>
+        <artifactId>project-parent</artifactId>
+        <groupId>fr.gatay.cedric.release</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>release</artifactId>
+    <packaging>pom</packaging>
+    <dependencies>
+        <dependency>
+            <groupId>fr.gatay.cedric.release</groupId>
+            <artifactId>application</artifactId>
+            <type>ear</type>
+        </dependency>
+        <dependency>
+            <groupId>fr.gatay.cedric.release</groupId>
+            <artifactId>docs</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>fr.gatay.cedric.release</groupId>
+            <artifactId>webstart-app</artifactId>
+            <type>zip</type>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes><include>**</include></includes>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>distro-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <descriptors>
+                                <descriptor>src/main/assembly/assembly.xml</descriptor>
+                            </descriptors>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            
+        </plugins>
+    </build>
+
+</project>
